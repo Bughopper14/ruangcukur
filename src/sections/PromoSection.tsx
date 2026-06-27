@@ -50,13 +50,13 @@ export default function PromoSection() {
           {otherServices.map((s, i) => (
             <div
               key={i}
-              className="flex items-center justify-between py-4 border-b border-border"
+              className="flex items-center justify-between gap-4 py-4 border-b border-border"
             >
-              <div className="flex items-center gap-3">
-                <s.icon size={16} className="text-gold/70" />
-                <span className="text-text-secondary text-sm">{s.name}</span>
+              <div className="flex items-center gap-3 min-w-0">
+                <s.icon size={16} className="text-gold/70 flex-shrink-0" />
+                <span className="text-text-secondary text-sm truncate">{s.name}</span>
               </div>
-              <span className="text-text-primary font-semibold text-sm">
+              <span className="text-text-primary font-semibold text-sm flex-shrink-0 whitespace-nowrap">
                 {s.price === 'Ask' || s.price === 'Incl. Package' ? s.price : `Rp ${s.price}`}
               </span>
             </div>
