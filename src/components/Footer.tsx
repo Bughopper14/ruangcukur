@@ -9,12 +9,11 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
           {/* Brand */}
           <div>
-            <div className="flex items-center gap-2 mb-4">
-              <span className="font-[Playfair_Display] text-xl font-bold text-text-primary">
-                RUANG CUKUR
-              </span>
-              <span className="text-gold text-xs font-semibold tracking-widest">.INC</span>
-            </div>
+            <img
+              src="/ruangcukur/images/logo.png"
+              alt="Ruang Cukur .INC"
+              className="h-10 w-auto object-contain mb-4"
+            />
             <p className="text-text-secondary text-sm leading-relaxed">
               UK & Korea Certified Barbers.<br />
               Premium grooming experience di Gading Serpong.
@@ -52,15 +51,35 @@ export default function Footer() {
             <h4 className="text-xs font-semibold tracking-widest text-gold uppercase mb-4">
               Follow Us
             </h4>
-            <a
-              href="https://instagram.com/ruangcukur"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 text-text-secondary hover:text-gold transition-colors text-sm"
-            >
-              <ExternalLink size={18} />
-              @ruangcukur
-            </a>
+            <div className="space-y-3">
+              <a
+                href="https://instagram.com/ruangcukur.inc"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-2 text-text-secondary hover:text-gold transition-colors text-sm"
+              >
+                <ExternalLink size={16} />
+                IG @ruangcukur.inc
+              </a>
+              <a
+                href="https://instagram.com/ruangcukur.inc_gs"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-2 text-text-secondary hover:text-gold transition-colors text-sm"
+              >
+                <ExternalLink size={16} />
+                IG @ruangcukur.inc_gs
+              </a>
+              <a
+                href="https://tiktok.com/@ruangcukur.inc"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-2 text-text-secondary hover:text-gold transition-colors text-sm"
+              >
+                <ExternalLink size={16} />
+                TikTok @ruangcukur.inc
+              </a>
+            </div>
           </div>
         </div>
 

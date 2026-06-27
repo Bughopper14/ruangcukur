@@ -5,6 +5,7 @@ import ServicesSection from './sections/ServicesSection'
 import PackagesSection from './sections/PackagesSection'
 import PromoSection from './sections/PromoSection'
 import BarbersSection from './sections/BarbersSection'
+import GallerySection from './sections/GallerySection'
 import BookingSection from './sections/BookingSection'
 import Footer from './components/Footer'
 
@@ -19,6 +20,7 @@ function App() {
         <PackagesSection />
         <PromoSection />
         <BarbersSection />
+        <GallerySection />
         <BookingSection />
       </main>
       <Footer />

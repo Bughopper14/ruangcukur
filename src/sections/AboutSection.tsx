@@ -20,14 +20,12 @@ export default function AboutSection() {
           {/* Image side */}
           <div className="relative">
             <div className="aspect-[4/5] bg-bg-secondary border border-border relative overflow-hidden">
-              <div className="absolute inset-0 bg-gradient-to-br from-gold/10 to-transparent" />
-              <div className="absolute inset-0 flex items-center justify-center">
-                <div className="text-center">
-                  <Scissors size={48} className="text-gold/40 mx-auto mb-4" />
-                  <p className="text-text-muted text-sm tracking-wider uppercase">Premium Interior</p>
-                  <p className="text-text-muted text-xs mt-1">Hexagonal LED Ceiling</p>
-                </div>
-              </div>
+              <img
+                src="/ruangcukur/images/interior-2.jpg"
+                alt="Ruang Cukur Seating Area"
+                className="absolute inset-0 w-full h-full object-cover"
+              />
+              <div className="absolute inset-0 bg-gradient-to-br from-bg-primary/20 to-transparent" />
               {/* Gold corner accent */}
               <div className="absolute top-0 left-0 w-16 h-16 border-t-2 border-l-2 border-gold" />
               <div className="absolute bottom-0 right-0 w-16 h-16 border-b-2 border-r-2 border-gold" />

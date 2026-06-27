@@ -4,6 +4,7 @@ import { Menu, X, Phone } from 'lucide-react'
 const navLinks = [
   { label: '( HOME )', href: '#hero' },
   { label: '( SERVICES )', href: '#services' },
+  { label: '( GALLERY )', href: '#gallery' },
   { label: '( BOOKING )', href: '#booking' },
 ]
 
@@ -35,11 +36,12 @@ export default function Header() {
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16 sm:h-20">
             {/* Logo */}
-            <a href="#hero" onClick={() => handleNav('#hero')} className="flex items-center gap-2">
-              <span className="font-[Playfair_Display] text-lg sm:text-xl font-bold tracking-tight text-text-primary">
-                RUANG CUKUR
-              </span>
-              <span className="text-gold text-xs font-semibold tracking-widest">.INC</span>
+            <a href="#hero" onClick={() => handleNav('#hero')} className="flex items-center">
+              <img
+                src="/ruangcukur/images/logo.png"
+                alt="Ruang Cukur .INC"
+                className="h-10 sm:h-12 w-auto object-contain"
+              />
             </a>
 
             {/* Desktop Nav */}

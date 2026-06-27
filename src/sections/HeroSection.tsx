@@ -5,16 +5,15 @@ const WA_LINK = 'https://wa.me/628119451887?text=Halo%20Ruang%20Cukur!%20Saya%20
 export default function HeroSection() {
   return (
     <section id="hero" className="relative min-h-screen flex items-center justify-center overflow-hidden">
-      {/* Background with hexagonal pattern */}
+      {/* Background with real interior photo */}
       <div className="absolute inset-0 bg-bg-primary">
-        <div
-          className="absolute inset-0 opacity-20"
-          style={{
-            backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M30 0l25.98 15v30L30 60 4.02 45V15z' fill='none' stroke='%23C9A961' stroke-width='0.5'/%3E%3C/svg%3E")`,
-            backgroundSize: '60px 60px',
-          }}
+        <img
+          src="/ruangcukur/images/interior-1.jpg"
+          alt="Ruang Cukur Interior"
+          className="absolute inset-0 w-full h-full object-cover"
         />
-        <div className="absolute inset-0 bg-gradient-to-b from-bg-primary/50 via-bg-primary/80 to-bg-primary" />
+        <div className="absolute inset-0 bg-bg-primary/70" />
+        <div className="absolute inset-0 bg-gradient-to-b from-bg-primary/40 via-bg-primary/60 to-bg-primary" />
       </div>
 
       {/* Content */}
