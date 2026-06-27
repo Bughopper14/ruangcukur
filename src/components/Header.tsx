@@ -38,7 +38,7 @@ export default function Header() {
             {/* Logo */}
             <a href="#hero" onClick={() => handleNav('#hero')} className="flex items-center">
               <img
-                src="/ruangcukur/images/logo.png"
+                src={`${import.meta.env.BASE_URL}images/logo.png`}
                 alt="Ruang Cukur .INC"
                 className="h-10 sm:h-12 w-auto object-contain"
               />

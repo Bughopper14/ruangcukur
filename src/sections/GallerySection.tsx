@@ -17,7 +17,7 @@ interface GalleryItem {
 const galleryItems: GalleryItem[] = [
   {
     id: 1,
-    src: "/ruangcukur/images/cut-1.jpg",
+    src: `${import.meta.env.BASE_URL}images/cut-1.jpg`,
     title: "The French Crop",
     subtitle: "Textured fringe with razor-sharp fade",
     barber: "Alex",
@@ -26,7 +26,7 @@ const galleryItems: GalleryItem[] = [
   },
   {
     id: 2,
-    src: "/ruangcukur/images/cut-2.jpg",
+    src: `${import.meta.env.BASE_URL}images/cut-2.jpg`,
     title: "The Executive Quiff",
     subtitle: "Elevated volume, precision taper",
     barber: "Rizky",
@@ -35,7 +35,7 @@ const galleryItems: GalleryItem[] = [
   },
   {
     id: 3,
-    src: "/ruangcukur/images/cut-1.jpg",
+    src: `${import.meta.env.BASE_URL}images/cut-1.jpg`,
     title: "The Classic Fade",
     subtitle: "Clean lines, sharp finish",
     barber: "Ende",
@@ -45,7 +45,7 @@ const galleryItems: GalleryItem[] = [
   },
   {
     id: 4,
-    src: "/ruangcukur/images/cut-3.jpg",
+    src: `${import.meta.env.BASE_URL}images/cut-3.jpg`,
     title: "The Curl Crop",
     subtitle: "Natural texture, mid fade",
     barber: "Alex",
@@ -54,7 +54,7 @@ const galleryItems: GalleryItem[] = [
   },
   {
     id: 5,
-    src: "/ruangcukur/images/cut-4.jpg",
+    src: `${import.meta.env.BASE_URL}images/cut-4.jpg`,
     title: "The Buzz",
     subtitle: "Zero guard confidence",
     barber: "Rizky",
@@ -63,7 +63,7 @@ const galleryItems: GalleryItem[] = [
   },
   {
     id: 6,
-    src: "/ruangcukur/images/cut-2.jpg",
+    src: `${import.meta.env.BASE_URL}images/cut-2.jpg`,
     title: "Texture Detail",
     subtitle: "Volume at crown",
     span: "col-span-1 row-span-1",
@@ -72,7 +72,7 @@ const galleryItems: GalleryItem[] = [
   },
   {
     id: 7,
-    src: "/ruangcukur/images/cut-3.jpg",
+    src: `${import.meta.env.BASE_URL}images/cut-3.jpg`,
     title: "Curl Pattern",
     subtitle: "Defined ringlets",
     span: "col-span-1 row-span-1",
@@ -81,7 +81,7 @@ const galleryItems: GalleryItem[] = [
   },
   {
     id: 8,
-    src: "/ruangcukur/images/storefront.jpg",
+    src: `${import.meta.env.BASE_URL}images/storefront.jpg`,
     title: "The Shop",
     subtitle: "Madison Grande K9, Gading Serpong",
     span: "col-span-1 row-span-1",

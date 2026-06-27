@@ -10,7 +10,7 @@ export default function Footer() {
           {/* Brand */}
           <div>
             <img
-              src="/ruangcukur/images/logo.png"
+              src={`${import.meta.env.BASE_URL}images/logo.png`}
               alt="Ruang Cukur .INC"
               className="h-10 w-auto object-contain mb-4"
             />

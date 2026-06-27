@@ -8,7 +8,7 @@ export default function HeroSection() {
       {/* Background with real interior photo */}
       <div className="absolute inset-0 bg-bg-primary">
         <img
-          src="/ruangcukur/images/interior-1.jpg"
+          src={`${import.meta.env.BASE_URL}images/interior-1.jpg`}
           alt="Ruang Cukur Interior"
           className="absolute inset-0 w-full h-full object-cover"
         />

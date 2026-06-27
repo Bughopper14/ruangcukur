@@ -21,7 +21,7 @@ export default function AboutSection() {
           <div className="relative">
             <div className="aspect-[4/5] bg-bg-secondary border border-border relative overflow-hidden">
               <img
-                src="/ruangcukur/images/interior-2.jpg"
+                src={`${import.meta.env.BASE_URL}images/interior-2.jpg`}
                 alt="Ruang Cukur Seating Area"
                 className="absolute inset-0 w-full h-full object-cover"
               />
