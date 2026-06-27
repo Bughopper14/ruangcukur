@@ -1,5 +1,5 @@
-import { useState, useEffect } from 'react'
-import { X, Phone, Calendar, Clock, User, Scissors, ChevronRight } from 'lucide-react'
+import { useState, useEffect, useRef, useCallback } from 'react'
+import { X, Phone, Calendar, Clock, User, Scissors, ChevronRight, Users } from 'lucide-react'
 
 const IMG_BASE = import.meta.env.BASE_URL
 
@@ -43,6 +43,19 @@ export default function BookingModal({ isOpen, onClose, initialService }: Bookin
   const [service, setService] = useState(initialService || '')
   const [date, setDate] = useState('')
   const [time, setTime] = useState('')
+  const [customerName, setCustomerName] = useState('')
+  const [personCount, setPersonCount] = useState(1)
+
+  // Refs for enter-to-next-field
+  const nameRef = useRef<HTMLInputElement>(null)
+  const serviceRef = useRef<HTMLSelectElement>(null)
+  const dateRef = useRef<HTMLInputElement>(null)
+  const timeRef = useRef<HTMLSelectElement>(null)
+  const personRef = useRef<HTMLSelectElement>(null)
+
+  const focusNext = useCallback((nextRef: React.RefObject<HTMLElement | null>) => {
+    nextRef.current?.focus()
+  }, [])
 
   useEffect(() => {
     if (initialService) setService(initialService)
@@ -56,6 +69,10 @@ export default function BookingModal({ isOpen, onClose, initialService }: Bookin
       setService(initialService || '')
       setDate('')
       setTime('')
+      setCustomerName('')
+      setPersonCount(1)
+      // Auto-focus name field after animation
+      setTimeout(() => nameRef.current?.focus(), 150)
     } else {
       document.body.style.overflow = ''
     }
@@ -67,7 +84,13 @@ export default function BookingModal({ isOpen, onClose, initialService }: Bookin
   const selectedStylist = stylists.find((s) => s.name === stylist)
   const selectedService = services.find((s) => s.id === service)
   const price = selectedService ? selectedService.price : 0
+  const totalPrice = price * personCount
   const priceText = selectedService
+    ? price === 0
+      ? 'Incl. Package'
+      : `Rp ${totalPrice.toLocaleString('id-ID')}`
+    : '-'
+  const unitPriceText = selectedService
     ? price === 0
       ? 'Incl. Package'
       : `Rp ${price.toLocaleString('id-ID')}`
@@ -75,19 +98,25 @@ export default function BookingModal({ isOpen, onClose, initialService }: Bookin
 
   const handleSubmit = () => {
     const s = services.find((x) => x.id === service)
+    const personLine = personCount > 1 ? `*Jumlah Orang:* ${personCount} orang%0A` : ''
     const msg =
       `Halo Ruang Cukur! Saya mau booking:%0A%0A` +
-      `*Stylist:* ${stylist}%0A` +
-      `*Service:* ${s?.name}${s?.desc ? ` (${s.desc})` : ''}%0A` +
-      `*Harga:* ${priceText}%0A` +
+      `*Nama:* ${customerName}%0A` +
       `*Tanggal:* ${date}%0A` +
-      `*Waktu:* ${time}%0A%0A` +
+      `*Waktu:* ${time}%0A` +
+      `*Stylist:* ${stylist}%0A` +
+      `*Paket:* ${s?.name}${s?.desc ? ` (${s.desc})` : ''}%0A` +
+      `*Harga/unit:* ${unitPriceText}%0A` +
+      personLine +
+      `*Total Harga:* ${priceText}%0A%0A` +
       `Terima kasih!`
     window.open(`https://wa.me/628119451887?text=${msg}`, '_blank')
     onClose()
   }
 
   const today = new Date().toISOString().split('T')[0]
+
+  const isFormValid = customerName.trim() && service && date && time
 
   return (
     <div className="fixed inset-0 z-[100] flex items-end sm:items-center justify-center">
@@ -113,11 +142,32 @@ export default function BookingModal({ isOpen, onClose, initialService }: Bookin
         </div>
 
         {/* Form */}
-        <div className="p-5 space-y-6">
+        <div className="p-5 space-y-5">
+          {/* Customer Name */}
+          <div>
+            <label className="flex items-center gap-2 text-xs uppercase tracking-wider text-text-muted mb-2">
+              <User size={14} className="text-gold" /> Nama Customer
+            </label>
+            <input
+              ref={nameRef}
+              type="text"
+              value={customerName}
+              onChange={(e) => setCustomerName(e.target.value)}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter') {
+                  e.preventDefault()
+                  focusNext(serviceRef)
+                }
+              }}
+              placeholder="Masukkan nama Anda"
+              className="w-full bg-bg-primary border border-border text-text-primary p-3.5 text-sm rounded-lg focus:border-gold outline-none transition-colors placeholder:text-text-muted/50"
+            />
+          </div>
+
           {/* Stylist — horizontal scroll cards with photo */}
           <div>
             <label className="flex items-center gap-2 text-xs uppercase tracking-wider text-text-muted mb-3">
-              <User size={14} className="text-gold" /> Pilih Stylist
+              <Scissors size={14} className="text-gold" /> Pilih Stylist
             </label>
             <div className="flex gap-3 overflow-x-auto pb-2 -mx-1 px-1 scrollbar-hide">
               {stylists.map((s) => (
@@ -180,12 +230,19 @@ export default function BookingModal({ isOpen, onClose, initialService }: Bookin
 
           {/* Service */}
           <div>
-            <label className="flex items-center gap-2 text-xs uppercase tracking-wider text-text-muted mb-3">
+            <label className="flex items-center gap-2 text-xs uppercase tracking-wider text-text-muted mb-2">
               <Scissors size={14} className="text-gold" /> Pilih Service / Paket
             </label>
             <select
+              ref={serviceRef}
               value={service}
               onChange={(e) => setService(e.target.value)}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter') {
+                  e.preventDefault()
+                  focusNext(dateRef)
+                }
+              }}
               className="w-full bg-bg-primary border border-border text-text-primary p-3.5 text-sm rounded-lg focus:border-gold outline-none transition-colors appearance-none"
               style={{ backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23666' stroke-width='2'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E")`, backgroundRepeat: 'no-repeat', backgroundPosition: 'right 12px center' }}
             >
@@ -221,9 +278,16 @@ export default function BookingModal({ isOpen, onClose, initialService }: Bookin
                 <Calendar size={14} className="text-gold" /> Tanggal
               </label>
               <input
+                ref={dateRef}
                 type="date"
                 value={date}
                 onChange={(e) => setDate(e.target.value)}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter') {
+                    e.preventDefault()
+                    focusNext(timeRef)
+                  }
+                }}
                 min={today}
                 className="w-full bg-bg-primary border border-border text-text-primary p-3.5 text-sm rounded-lg focus:border-gold outline-none transition-colors"
               />
@@ -233,8 +297,15 @@ export default function BookingModal({ isOpen, onClose, initialService }: Bookin
                 <Clock size={14} className="text-gold" /> Waktu
               </label>
               <select
+                ref={timeRef}
                 value={time}
                 onChange={(e) => setTime(e.target.value)}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter') {
+                    e.preventDefault()
+                    focusNext(personRef)
+                  }
+                }}
                 className="w-full bg-bg-primary border border-border text-text-primary p-3.5 text-sm rounded-lg focus:border-gold outline-none transition-colors appearance-none"
                 style={{ backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23666' stroke-width='2'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E")`, backgroundRepeat: 'no-repeat', backgroundPosition: 'right 12px center' }}
               >
@@ -248,10 +319,44 @@ export default function BookingModal({ isOpen, onClose, initialService }: Bookin
             </div>
           </div>
 
+          {/* Person Count */}
+          <div>
+            <label className="flex items-center gap-2 text-xs uppercase tracking-wider text-text-muted mb-2">
+              <Users size={14} className="text-gold" /> Jumlah Orang
+            </label>
+            <select
+              ref={personRef}
+              value={personCount}
+              onChange={(e) => setPersonCount(Number(e.target.value))}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter') {
+                  e.preventDefault()
+                  // If form valid, trigger submit; otherwise just blur
+                  if (isFormValid) handleSubmit()
+                }
+              }}
+              className="w-full bg-bg-primary border border-border text-text-primary p-3.5 text-sm rounded-lg focus:border-gold outline-none transition-colors appearance-none"
+              style={{ backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23666' stroke-width='2'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E")`, backgroundRepeat: 'no-repeat', backgroundPosition: 'right 12px center' }}
+            >
+              {Array.from({ length: 6 }, (_, i) => (
+                <option key={i + 1} value={i + 1}>
+                  {i + 1} orang
+                </option>
+              ))}
+            </select>
+          </div>
+
           {/* Price Preview */}
           <div className="bg-bg-primary border border-gold/30 rounded-lg p-5">
-            <div className="text-xs text-text-muted uppercase tracking-wider mb-1">
-              Perkiraan Harga
+            <div className="flex items-center justify-between mb-1">
+              <div className="text-xs text-text-muted uppercase tracking-wider">
+                Perkiraan Harga
+              </div>
+              {personCount > 1 && selectedService && price > 0 && (
+                <div className="text-xs text-text-muted">
+                  {unitPriceText} × {personCount}
+                </div>
+              )}
             </div>
             <div className="text-gold font-bold text-2xl">{priceText}</div>
             {selectedService?.desc && (
@@ -264,7 +369,7 @@ export default function BookingModal({ isOpen, onClose, initialService }: Bookin
           {/* Submit */}
           <button
             onClick={handleSubmit}
-            disabled={!service || !date || !time}
+            disabled={!isFormValid}
             className="w-full flex items-center justify-center gap-2 bg-gold text-bg-primary py-4 text-sm font-semibold tracking-wider uppercase rounded-lg hover:bg-gold-light transition-all disabled:opacity-40 disabled:cursor-not-allowed active:scale-[0.98]"
           >
             <Phone size={16} />
