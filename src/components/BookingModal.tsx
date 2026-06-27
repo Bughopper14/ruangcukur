@@ -51,11 +51,16 @@ export default function BookingModal({ isOpen, onClose, initialService }: Bookin
   useEffect(() => {
     if (isOpen) {
       document.body.style.overflow = 'hidden'
+      // Reset form defaults every time modal opens
+      setStylist('Any Stylist')
+      setService(initialService || '')
+      setDate('')
+      setTime('')
     } else {
       document.body.style.overflow = ''
     }
     return () => { document.body.style.overflow = '' }
-  }, [isOpen])
+  }, [isOpen, initialService])
 
   if (!isOpen) return null
 
