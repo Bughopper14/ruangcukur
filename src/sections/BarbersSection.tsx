@@ -1,22 +1,22 @@
 const barbers = [
   {
-    name: 'Rian',
-    role: 'Lead Stylist',
-    specialty: 'Classic Cuts, Fades, Beard Sculpting',
-    experience: '5+ Years',
-    image: '/ruangcukur/images/barber-rian.jpg',
-  },
-  {
     name: 'Kholiq',
-    role: 'Color Specialist',
-    specialty: 'Korean Style, Coloring, Texture',
+    role: 'Senior Stylist',
+    specialty: 'Kids Cuts, Creative Styles, Fades',
     experience: '5+ Years',
     image: '/ruangcukur/images/barber-kholiq.jpg',
   },
   {
+    name: 'Rian',
+    role: 'Color Specialist',
+    specialty: 'Korean Style, Coloring, Texture',
+    experience: '5+ Years',
+    image: '/ruangcukur/images/barber-rian.jpg',
+  },
+  {
     name: 'Ende',
-    role: 'Junior Stylist',
-    specialty: 'Kids Cuts, Creative Styles, Fades',
+    role: 'Senior Stylist',
+    specialty: 'Classic Cuts, Fades, Beard Sculpting',
     experience: '5+ Years',
     image: '/ruangcukur/images/barber-ende.jpg',
   },
