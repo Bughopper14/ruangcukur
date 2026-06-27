@@ -1,22 +1,30 @@
 import { ArrowRight } from 'lucide-react'
 
+interface PackagesSectionProps {
+  onBookClick?: (serviceId: string) => void
+}
+
 const packages = [
   {
+    id: 'hc-colours',
     title: 'Haircut & Colours',
     description: 'Basic Colours Black',
     price: '200.000',
   },
   {
+    id: 'hc-creambath',
     title: 'Haircut & Creambath',
     description: 'Haircut + Relax Head Massage',
     price: '180.000',
   },
   {
+    id: 'hc-massage',
     title: 'Haircut & Massage',
     description: 'Haircut + Massage 25 min',
     price: '150.000',
   },
   {
+    id: 'hc-shave',
     title: 'Haircut & Shave',
     description: 'Clean Look Style',
     price: '115.000',
@@ -24,9 +32,7 @@ const packages = [
   },
 ]
 
-const WA_LINK = 'https://wa.me/628119451887?text=Halo%20Ruang%20Cukur!%20Saya%20mau%20booking%20untuk%20...'
-
-export default function PackagesSection() {
+export default function PackagesSection({ onBookClick }: PackagesSectionProps) {
   return (
     <section className="py-20 sm:py-28 bg-bg-primary">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -57,14 +63,12 @@ export default function PackagesSection() {
               <p className="text-text-muted text-sm mb-6">{pkg.description}</p>
               <div className="flex items-end justify-between">
                 <span className="text-gold font-bold text-2xl sm:text-3xl">Rp {pkg.price}</span>
-                <a
-                  href={WA_LINK}
-                  target="_blank"
-                  rel="noopener noreferrer"
+                <button
+                  onClick={() => onBookClick?.(pkg.id)}
                   className="flex items-center gap-1 text-text-muted hover:text-gold transition-colors text-xs tracking-wider uppercase"
                 >
                   Book <ArrowRight size={14} />
-                </a>
+                </button>
               </div>
             </div>
           ))}

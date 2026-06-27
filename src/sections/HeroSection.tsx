@@ -1,8 +1,10 @@
 import { Phone, MapPin, Clock } from 'lucide-react'
 
-const WA_LINK = 'https://wa.me/628119451887?text=Halo%20Ruang%20Cukur!%20Saya%20mau%20booking%20untuk%20...'
+interface HeroSectionProps {
+  onBookClick?: () => void
+}
 
-export default function HeroSection() {
+export default function HeroSection({ onBookClick }: HeroSectionProps) {
   return (
     <section id="hero" className="relative min-h-screen flex items-center justify-center overflow-hidden">
       {/* Background with real interior photo */}
@@ -41,15 +43,13 @@ export default function HeroSection() {
         </div>
 
         <div className="animate-fade-in-up" style={{ animationDelay: '0.8s', opacity: 0 }}>
-          <a
-            href={WA_LINK}
-            target="_blank"
-            rel="noopener noreferrer"
+          <button
+            onClick={onBookClick}
             className="inline-flex items-center gap-3 bg-gold text-bg-primary px-8 py-4 text-sm font-semibold tracking-wider uppercase hover:bg-gold-light transition-all duration-200 hover:-translate-y-0.5"
           >
             <Phone size={18} />
-            Book via WhatsApp
-          </a>
+            Book Appointment
+          </button>
         </div>
 
         <div className="animate-fade-in-up mt-12 flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-8 text-text-muted text-xs tracking-wider" style={{ animationDelay: '1s', opacity: 0 }}>

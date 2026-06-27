@@ -1,8 +1,10 @@
 import { MapPin, Phone, Clock, ExternalLink } from 'lucide-react'
 
-const WA_LINK = 'https://wa.me/628119451887?text=Halo%20Ruang%20Cukur!%20Saya%20mau%20booking%20untuk%20...'
+interface FooterProps {
+  onBookClick?: () => void
+}
 
-export default function Footer() {
+export default function Footer({ onBookClick }: FooterProps) {
   return (
     <footer className="bg-bg-secondary border-t border-border">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16">
@@ -26,15 +28,13 @@ export default function Footer() {
               Contact
             </h4>
             <div className="space-y-3">
-              <a
-                href={WA_LINK}
-                target="_blank"
-                rel="noopener noreferrer"
+              <button
+                onClick={onBookClick}
                 className="flex items-center gap-3 text-text-secondary hover:text-gold transition-colors text-sm"
               >
                 <Phone size={16} />
                 +62 811-9451-887
-              </a>
+              </button>
               <div className="flex items-center gap-3 text-text-secondary text-sm">
                 <MapPin size={16} />
                 Ruko Madison Grande K9

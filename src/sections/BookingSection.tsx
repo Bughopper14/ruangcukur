@@ -1,8 +1,10 @@
 import { Phone, MapPin, Clock } from 'lucide-react'
 
-const WA_LINK = 'https://wa.me/628119451887?text=Halo%20Ruang%20Cukur!%20Saya%20mau%20booking%20untuk%20...'
+interface BookingSectionProps {
+  onBookClick?: () => void
+}
 
-export default function BookingSection() {
+export default function BookingSection({ onBookClick }: BookingSectionProps) {
   return (
     <section id="booking" className="py-20 sm:py-28 bg-bg-secondary relative overflow-hidden">
       {/* Background accent */}
@@ -22,18 +24,16 @@ export default function BookingSection() {
 
         <p className="text-text-secondary text-base sm:text-lg max-w-lg mx-auto mb-10 leading-relaxed">
           Walk-ins welcome, but booking is recommended for the best experience.
-          Reserve your spot now via WhatsApp.
+          Reserve your spot now.
         </p>
 
-        <a
-          href={WA_LINK}
-          target="_blank"
-          rel="noopener noreferrer"
+        <button
+          onClick={onBookClick}
           className="inline-flex items-center gap-3 bg-gold text-bg-primary px-10 py-4 text-sm font-semibold tracking-wider uppercase hover:bg-gold-light transition-all duration-200 hover:-translate-y-0.5 mb-12"
         >
           <Phone size={18} />
-          Book via WhatsApp
-        </a>
+          Book Appointment
+        </button>
 
         <div className="flex flex-col sm:flex-row items-center justify-center gap-6 sm:gap-10 text-text-muted text-sm">
           <span className="flex items-center gap-2">

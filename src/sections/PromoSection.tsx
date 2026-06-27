@@ -2,10 +2,10 @@ import { Gift, Star, Sparkles, Hand, Palette, Droplets } from 'lucide-react'
 
 const otherServices = [
   { icon: Sparkles, name: 'Creambath Head Massage', price: '100.000' },
-  { icon: Hand, name: 'Relax Enjoy Massage (45 min)', price: 'Ask' },
+  { icon: Hand, name: 'Relax Enjoy Massage (45 min)', price: 'Incl. Package' },
   { icon: Droplets, name: 'Hair Downperm / Perming', price: '250-300K' },
-  { icon: Sparkles, name: 'Hair Keratin For Men', price: '250-300K' },
-  { icon: Palette, name: 'Hair Colours Basic', price: '120.000' },
+  { icon: Sparkles, name: 'Hair Ceratine For Men', price: '250-300K' },
+  { icon: Palette, name: 'Hair Colours Basic (Black, Dark Brown, Blue Black)', price: '120.000' },
 ]
 
 export default function PromoSection() {
@@ -57,7 +57,7 @@ export default function PromoSection() {
                 <span className="text-text-secondary text-sm">{s.name}</span>
               </div>
               <span className="text-text-primary font-semibold text-sm">
-                {s.price === 'Ask' ? 'Ask' : `Rp ${s.price}`}
+                {s.price === 'Ask' || s.price === 'Incl. Package' ? s.price : `Rp ${s.price}`}
               </span>
             </div>
           ))}

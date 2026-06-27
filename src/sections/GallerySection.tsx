@@ -1,5 +1,9 @@
 import { useState } from "react";
-import { Scissors, Clock, ArrowRight } from "lucide-react";
+import { ArrowRight, Scissors, Clock } from "lucide-react";
+
+interface GallerySectionProps {
+  onBookClick?: () => void
+}
 
 interface GalleryItem {
   id: number;
@@ -96,7 +100,7 @@ const galleryItems: GalleryItem[] = [
   },
 ];
 
-export default function GallerySection() {
+export default function GallerySection({ onBookClick }: GallerySectionProps) {
   const [hoveredId, setHoveredId] = useState<number | null>(null);
 
   return (
@@ -121,11 +125,9 @@ export default function GallerySection() {
           {galleryItems.map((item) => {
             if (item.isCta) {
               return (
-                <a
+                <button
                   key={item.id}
-                  href="https://wa.me/628119451887"
-                  target="_blank"
-                  rel="noopener noreferrer"
+                  onClick={onBookClick}
                   className={`${item.span} relative group overflow-hidden rounded-sm border border-[#C9A961]/30 bg-[#C9A961]/5 flex flex-col items-center justify-center text-center p-6 hover:bg-[#C9A961]/10 transition-all duration-500`}
                   onMouseEnter={() => setHoveredId(item.id)}
                   onMouseLeave={() => setHoveredId(null)}
@@ -138,7 +140,7 @@ export default function GallerySection() {
                   <span className="inline-flex items-center gap-2 text-[#C9A961] text-sm font-medium group-hover:gap-3 transition-all">
                     Reserve Now <ArrowRight size={16} />
                   </span>
-                </a>
+                </button>
               );
             }
 

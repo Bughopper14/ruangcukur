@@ -1,6 +1,10 @@
 import { useState, useEffect } from 'react'
 import { Menu, X, Phone } from 'lucide-react'
 
+interface HeaderProps {
+  onBookClick?: () => void
+}
+
 const navLinks = [
   { label: '( HOME )', href: '#hero' },
   { label: '( SERVICES )', href: '#services' },
@@ -8,9 +12,7 @@ const navLinks = [
   { label: '( BOOKING )', href: '#booking' },
 ]
 
-const WA_LINK = 'https://wa.me/628119451887?text=Halo%20Ruang%20Cukur!%20Saya%20mau%20booking%20untuk%20...'
-
-export default function Header() {
+export default function Header({ onBookClick }: HeaderProps) {
   const [scrolled, setScrolled] = useState(false)
   const [menuOpen, setMenuOpen] = useState(false)
 
@@ -59,15 +61,13 @@ export default function Header() {
 
             {/* Right side */}
             <div className="flex items-center gap-3">
-              <a
-                href={WA_LINK}
-                target="_blank"
-                rel="noopener noreferrer"
+              <button
+                onClick={onBookClick}
                 className="hidden sm:flex items-center gap-2 bg-whatsapp text-white px-4 py-2 text-xs font-semibold tracking-wider uppercase hover:opacity-90 transition-opacity"
               >
                 <Phone size={14} />
                 Book
-              </a>
+              </button>
               <button
                 onClick={() => setMenuOpen(!menuOpen)}
                 className="md:hidden text-text-primary p-1"
@@ -91,15 +91,16 @@ export default function Header() {
               {link.label}
             </button>
           ))}
-          <a
-            href={WA_LINK}
-            target="_blank"
-            rel="noopener noreferrer"
+          <button
+            onClick={() => {
+              setMenuOpen(false)
+              onBookClick?.()
+            }}
             className="mt-4 flex items-center gap-2 bg-whatsapp text-white px-8 py-3 text-sm font-semibold tracking-wider uppercase"
           >
             <Phone size={16} />
             Book via WhatsApp
-          </a>
+          </button>
         </div>
       )}
     </>

@@ -1,4 +1,5 @@
 import Header from './components/Header'
+import BookingModal from './components/BookingModal'
 import HeroSection from './sections/HeroSection'
 import AboutSection from './sections/AboutSection'
 import ServicesSection from './sections/ServicesSection'
@@ -8,22 +9,36 @@ import BarbersSection from './sections/BarbersSection'
 import GallerySection from './sections/GallerySection'
 import BookingSection from './sections/BookingSection'
 import Footer from './components/Footer'
+import { useState } from 'react'
 
 function App() {
+  const [bookingOpen, setBookingOpen] = useState(false)
+  const [initialService, setInitialService] = useState<string | undefined>(undefined)
+
+  const openBooking = (serviceId?: string) => {
+    setInitialService(serviceId)
+    setBookingOpen(true)
+  }
+
   return (
     <div className="min-h-screen bg-bg-primary text-text-primary">
-      <Header />
+      <Header onBookClick={() => openBooking()} />
       <main>
-        <HeroSection />
+        <HeroSection onBookClick={() => openBooking()} />
         <AboutSection />
         <ServicesSection />
-        <PackagesSection />
+        <PackagesSection onBookClick={openBooking} />
         <PromoSection />
         <BarbersSection />
-        <GallerySection />
-        <BookingSection />
+        <GallerySection onBookClick={() => openBooking()} />
+        <BookingSection onBookClick={() => openBooking()} />
       </main>
-      <Footer />
+      <Footer onBookClick={() => openBooking()} />
+      <BookingModal
+        isOpen={bookingOpen}
+        onClose={() => setBookingOpen(false)}
+        initialService={initialService}
+      />
     </div>
   )
 }
