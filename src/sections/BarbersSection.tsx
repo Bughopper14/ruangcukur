@@ -10,7 +10,7 @@ const barbers = [
   },
   {
     name: 'Kholiq',
-    role: 'Color Specialist',
+    role: 'Senior Stylist',
     specialty: 'Korean Style, Coloring, Texture',
     experience: '5+ Years',
     image: `${IMG_BASE}images/barber-kholiq.jpg`,
