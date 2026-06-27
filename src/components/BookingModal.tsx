@@ -32,6 +32,12 @@ const timeSlots = Array.from({ length: 25 }, (_, i) => {
   return `${String(h).padStart(2, '0')}:${m}`
 })
 
+/** Check if a time slot is in the past for a given date (YYYY-MM-DD) */
+function isSlotPast(dateStr: string, slot: string, now: Date): boolean {
+  const slotDate = new Date(`${dateStr}T${slot}:00`)
+  return slotDate <= now
+}
+
 interface BookingModalProps {
   isOpen: boolean
   onClose: () => void
@@ -45,6 +51,7 @@ export default function BookingModal({ isOpen, onClose, initialService }: Bookin
   const [time, setTime] = useState('')
   const [customerName, setCustomerName] = useState('')
   const [personCount, setPersonCount] = useState(1)
+  const [now, setNow] = useState(new Date())
 
   // Refs for enter-to-next-field
   const nameRef = useRef<HTMLInputElement>(null)
@@ -55,6 +62,12 @@ export default function BookingModal({ isOpen, onClose, initialService }: Bookin
 
   const focusNext = useCallback((nextRef: React.RefObject<HTMLElement | null>) => {
     nextRef.current?.focus()
+  }, [])
+
+  // Keep current time updated every minute so past slots are filtered out
+  useEffect(() => {
+    const interval = setInterval(() => setNow(new Date()), 60000)
+    return () => clearInterval(interval)
   }, [])
 
   useEffect(() => {
@@ -78,6 +91,13 @@ export default function BookingModal({ isOpen, onClose, initialService }: Bookin
     }
     return () => { document.body.style.overflow = '' }
   }, [isOpen, initialService])
+
+  // Reset time if selected slot becomes past when date changes
+  useEffect(() => {
+    if (date && time && isSlotPast(date, time, now)) {
+      setTime('')
+    }
+  }, [date, now]) // eslint-disable-line react-hooks/exhaustive-deps
 
   if (!isOpen) return null
 
@@ -115,6 +135,15 @@ export default function BookingModal({ isOpen, onClose, initialService }: Bookin
   }
 
   const today = new Date().toISOString().split('T')[0]
+
+  // Filter time slots: only show future slots for today, all slots for future dates
+  const availableSlots = date
+    ? timeSlots.filter((slot) => {
+        if (date > today) return true
+        if (date < today) return false
+        return !isSlotPast(date, slot, now)
+      })
+    : timeSlots
 
   const isFormValid = customerName.trim() && service && date && time
 
@@ -281,7 +310,14 @@ export default function BookingModal({ isOpen, onClose, initialService }: Bookin
                 ref={dateRef}
                 type="date"
                 value={date}
-                onChange={(e) => setDate(e.target.value)}
+                onChange={(e) => {
+                  const newDate = e.target.value
+                  setDate(newDate)
+                  // If switching to today and selected time is now in the past, clear it
+                  if (newDate && time && isSlotPast(newDate, time, now)) {
+                    setTime('')
+                  }
+                }}
                 onKeyDown={(e) => {
                   if (e.key === 'Enter') {
                     e.preventDefault()
@@ -309,8 +345,8 @@ export default function BookingModal({ isOpen, onClose, initialService }: Bookin
                 className="w-full bg-bg-primary border border-border text-text-primary p-3.5 text-sm rounded-lg focus:border-gold outline-none transition-colors appearance-none"
                 style={{ backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23666' stroke-width='2'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E")`, backgroundRepeat: 'no-repeat', backgroundPosition: 'right 12px center' }}
               >
-                <option value="">-- Pilih --</option>
-                {timeSlots.map((t) => (
+                <option value="">{date ? '-- Pilih --' : 'Pilih tanggal dulu'}</option>
+                {availableSlots.map((t) => (
                   <option key={t} value={t}>
                     {t}
                   </option>
